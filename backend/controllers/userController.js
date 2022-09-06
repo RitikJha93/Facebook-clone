@@ -71,7 +71,7 @@ const register = async(req,res) => {
             message:"Register Success : please activate your email to start"
         })
     } catch (error) {
-        res.status(400).json({"message":error.message})
+        res.status(400).json({message:error.message})
     }
 }
 
@@ -86,10 +86,10 @@ const activateAccount = async(req,res)=>{
         }
         else{
             await User.findByIdAndUpdate(user.id,{verified:true})
-            return res.status(200).json({message:"Account has been activated successfullt"})
+            return res.status(200).json({message:"Account has been activated successfully"})
         }
     } catch (error) {
-        res.status(404).json({message:"some error occurred"})
+        res.status(404).json({message:error.message})
     }
 }
 
@@ -116,11 +116,11 @@ const login = async(req,res)=>{
             last_name:user.last_name,
             token :token,
             verified:user.verified,
-            message:"Logged in successfully"
         })
     } catch (error) {
         res.status(404).json({message:"some error occurred"})
         console.log(error)
     }
 }
+
 module.exports =  {register,activateAccount,login}
