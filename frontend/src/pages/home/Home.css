@@ -100,7 +100,7 @@
 
   }
 
-  @media(max-width:825px){
+  @media(max-width:805px){
     .stories{
       grid-template-columns: repeat(6,13vw);
     }
@@ -116,6 +116,12 @@
     .story_profile_pic{
       width: 7vw;
       height: 7vw;
+    }
+    .left_home::-webkit-scrollbar{
+      display: none;
+    }
+    .popup{
+      width: 70vw;
     }
   }
 
@@ -163,7 +169,7 @@
     transform: translate(-50%,-50%);
     z-index: 99;
     text-align: center;
-
+    border-radius: 10px;
   }
 
   .popup_header{

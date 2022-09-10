@@ -1,4 +1,5 @@
 import { Feeling, LiveVideo, Photo } from '../../svg'
+import {useSelector} from 'react-redux'
 import './style.css'
 const CreatePost = ({user}) => {
   return (

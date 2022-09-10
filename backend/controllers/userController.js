@@ -2,8 +2,10 @@ const User = require("../models/User")
 const {validateEmail,validateLength,validateUserName} = require('../helpers/validate')
 const bcrypt = require('bcrypt')
 const generateToken = require("../helpers/token")
-const { sendVerificationEmail } = require("../helpers/MAILER.JS")
+const { sendVerificationEmail,sendResetPasswordcode } = require("../helpers/MAILER.JS")
 const jwt = require('jsonwebtoken')
+const Code = require("../models/Code")
+const generateCode = require("../helpers/generateCode")
 const register = async(req,res) => {
     try {
         const {
@@ -77,10 +79,14 @@ const register = async(req,res) => {
 
 const activateAccount = async(req,res)=>{
     try {
-        
+        const validUser = req.user.id
         const {token} = req.body
         const user = jwt.verify(token,process.env.JWT_SECRET)
         const check = await User.findById(user.id)
+
+        if(validUser !== user.id){
+            return res.status(400).json({message:"You don't have permission to activate this"})
+        }
         if(check.verified == true){
             return res.status(400).json({message:"This account is already been activated"})
         }
@@ -123,4 +129,87 @@ const login = async(req,res)=>{
     }
 }
 
-module.exports =  {register,activateAccount,login}
+
+const sendverification = async(req,res)=>{
+    try{
+        const id = req.user.id
+        const user = await User.findById(id)
+        if(user.verified === true){
+            return res.status(400).json({message:"This account is already verified"})
+        }
+        const emailVerificationToken = generateToken({id:user._id.toString()},'30m')
+        const url = `${process.env.BASE_URL}/activate/${emailVerificationToken}`
+
+        sendVerificationEmail(user.email,user.first_name,url)
+        res.status(200).json({message:'Verification link has been sent to your email'})
+    }
+    catch(error){
+        res.status(500).json({message:error.message})
+
+    }
+}
+
+const findUser = async(req, res)=>{
+    try{
+        const {email} = req.body
+        const user = await User.findOne({email}).select('-password')
+        if(!user) return res.status(404).json({message:'Account does not exist'})
+
+        return res.status(200).json({
+            email:user.email,
+            picture:user.picture
+        })
+    }
+    catch(error){
+        res.status(500).json({message:error.message})
+    }
+}
+
+const sendResetPassword = async(req, res)=>{
+    try{
+        const {email} = req.body
+        const user = await User.findOne({email}).select('-password')
+        await Code.findOneAndRemove({user:user._id})
+        const code = generateCode(5)
+        const savedCode = await Code.create({
+            code,
+            user:user._id
+        })
+        console.log(savedCode)
+        sendResetPasswordcode(user.email,user.first_name,code)
+        res.json({message:'Email reset code has been sent to your email'})
+    }
+    catch(error){
+        res.status(500).json({message:error.message})
+    }
+}
+
+const validateResetCode = async(req, res)=>{
+    try{
+        const {email,code} = req.body
+        const user = await User.findOne({email})
+        const DbCode = await Code.findOne({user:user._id})
+        if(DbCode.code !== code){
+            return res.status(400).json({message: 'Verfication code is wrong'})
+        }
+        return res.status(200).json({message: 'verified'})
+    }
+    catch(error){
+        res.status(500).json({message:error.message})
+    }
+}
+
+const changePassword = async(req, res)=>{
+    try{
+        const {email,password} = req.body
+        const cryptedPassword = await bcrypt.hash(password,12)
+
+        const updated = await User.findOneAndUpdate({email},{password: cryptedPassword})
+        res.status(200).json({message: updated})
+    }
+    catch(error){
+        res.status(500).json({message:error.message})
+
+    }
+}
+module.exports =  {register,activateAccount,login,sendverification,findUser,sendResetPassword,validateResetCode,changePassword}

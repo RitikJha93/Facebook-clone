@@ -76,7 +76,7 @@ const LoginForm = ({setVisible}) => {
                             <button type='submit' className='blue_btn'>Log in</button>
                             </Form>
                         </Formik>
-                        <Link to='/forgot' className='forgot_password'>Forgot password ?</Link>
+                        <Link to='/reset' className='forgot_password'>Forgot password ?</Link>
                         <div className="sign_splitter">
 
                         </div>
