@@ -6,7 +6,7 @@ import RightHome from "../../components/Home/Right"
 import SendVerification from "../../components/Home/sendVerification"
 import Stories from "../../components/Home/stories/"
 import './Home.css'
-const Home = () => {
+const Home = ({setVisible}) => {
   const {user}  = useSelector((state)=>({...state}))
   return (
     <div className="home">
@@ -16,7 +16,7 @@ const Home = () => {
         <Stories />
         {user.verified === false && <SendVerification user={user} />}
 
-        <CreatePost user={user}/>
+        <CreatePost user={user} setVisible={setVisible}/>
       </div>
       <RightHome user={user}/>
     </div>

@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import EmojiPickerBackground from "./EmojiPickerBackground";
 
-const ImagePreview = ({
+export default function ImagePreview({
   text,
-  setText,
   user,
+  setText,
   images,
   setImages,
   setShowPrev,
-}) => {
+}) {
   const imageInputRef = useRef(null);
   const handleImages = (e) => {
     let files = Array.from(e.target.files);
@@ -20,7 +20,6 @@ const ImagePreview = ({
       };
     });
   };
-  console.log(images);
   return (
     <div className="overflow_a scrollbar">
       <EmojiPickerBackground text={text} user={user} setText={setText} type2 />
@@ -35,12 +34,12 @@ const ImagePreview = ({
         {images && images.length ? (
           <div className="add_pics_inside1 p0">
             <div className="preview_actions">
-              <button classname="hover1">
+              <button className="hover1">
                 <i className="edit_icon"></i>
                 Edit
               </button>
               <button
-                classname="hover1"
+                className="hover1"
                 onClick={() => {
                   imageInputRef.current.click();
                 }}
@@ -49,7 +48,12 @@ const ImagePreview = ({
                 Add Photos/Videos
               </button>
             </div>
-            <div className="small_white_circle" onClick={() => setImages([])}>
+            <div
+              className="small_white_circle"
+              onClick={() => {
+                setImages([]);
+              }}
+            >
               <i className="exit_icon"></i>
             </div>
             <div
@@ -61,7 +65,7 @@ const ImagePreview = ({
                   : images.length === 3
                   ? "preview3"
                   : images.length === 4
-                  ? "preview4"
+                  ? "preview4 "
                   : images.length === 5
                   ? "preview5"
                   : images.length % 2 === 0
@@ -69,16 +73,18 @@ const ImagePreview = ({
                   : "preview6 singular_grid"
               }
             >
-              {images.map((img, i) => {
-                return <img key={i} src={img} alt="" srcset="" />;
-              })}
+              {images.map((img, i) => (
+                <img src={img} key={i} alt="" />
+              ))}
             </div>
           </div>
         ) : (
           <div className="add_pics_inside1">
             <div
               className="small_white_circle"
-              onClick={() => setShowPrev(false)}
+              onClick={() => {
+                setShowPrev(false);
+              }}
             >
               <i className="exit_icon"></i>
             </div>
@@ -100,11 +106,10 @@ const ImagePreview = ({
           <div className="add_circle">
             <i className="phone_icon"></i>
           </div>
-          <div className="mobile_text">Add phtos from your mobile device.</div>
+          <div className="mobile_text">Add phots from your mobile device.</div>
           <span className="addphone_btn">Add</span>
         </div>
       </div>
     </div>
   );
-};
-export default ImagePreview;
+}
