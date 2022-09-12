@@ -8,11 +8,29 @@ export default function ImagePreview({
   images,
   setImages,
   setShowPrev,
+  setError,
 }) {
   const imageInputRef = useRef(null);
   const handleImages = (e) => {
     let files = Array.from(e.target.files);
     files.forEach((img) => {
+      console.log(img.type !== "image/jpeg");
+      if (
+        img.type !== "image/jpeg" &&
+        img.type !== "image/png" &&
+        img.type !== "imagage.webp" &&
+        img.type !== "image/gif"
+      ) {
+        setError(
+          `${img.name} format is not supported! Please try using jpeg,png,webp or gif formats`
+        );
+        files = files.filter((item) => item.name !== img.name);
+        return;
+      } else if (img.size > 1024 * 1024) {
+        setError(`${img.name} size is too large maximum size is 5mb`);
+        files = files.filter((item) => item.name !== img.name);
+        return
+      }
       const reader = new FileReader();
       reader.readAsDataURL(img);
       reader.onload = (readerEvent) => {
@@ -27,6 +45,7 @@ export default function ImagePreview({
         <input
           type="file"
           multiple
+          accept="image/jpeg,image/png,image/gif,image/webp"
           hidden
           ref={imageInputRef}
           onChange={handleImages}
