@@ -40,10 +40,10 @@ const ReactsPopup = ({ visible,setVisible }) => {
           },500)
         }}
       >
-        {reactsArray.map((react, i) => {
+        {reactsArray.map((emoji, i) => {
           return(
             <div className="react">
-               <img src={react.image} alt="" />
+               <img src={emoji.image} alt="" />
             </div>
           );
         })}

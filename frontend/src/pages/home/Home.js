@@ -28,7 +28,7 @@ const Home = ({ setVisible, posts }) => {
         <div className="posts">
           {posts.map((post) => {
             return (
-              <Post key={post._id} post={post} />
+              <Post key={post._id} post={post} user={user} />
             );
           })}
         </div>

@@ -4,7 +4,8 @@ import Moment from "react-moment";
 import { Dots, Public } from "../../svg";
 import ReactsPopup from "./ReactsPopup";
 import { useState } from "react";
-const Post = ({ post }) => {
+import CreateComments from "./CreateComments";
+const Post = ({ post, user }) => {
   const [visible, setVisible] = useState(false);
   return (
     <div className="post">
@@ -93,14 +94,14 @@ const Post = ({ post }) => {
         <div
           className="post_action hover1"
           onMouseOver={() => {
-            setTimeout(() =>{
+            setTimeout(() => {
               setVisible(true);
-            },500)
+            }, 500);
           }}
           onMouseLeave={() => {
-            setTimeout(() =>{
+            setTimeout(() => {
               setVisible(false);
-            },500)
+            }, 500);
           }}
         >
           <i className="like_icon"></i>
@@ -114,6 +115,10 @@ const Post = ({ post }) => {
           <i className="share_icon"></i>
           <span>Share</span>
         </div>
+      </div>
+      <div className="comments_wrap">
+        <div className="comments_order"></div>
+        <CreateComments user={user} />
       </div>
     </div>
   );
