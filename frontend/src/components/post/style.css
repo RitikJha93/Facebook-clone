@@ -349,22 +349,21 @@
 
 /* create comment */
 
-.comments_wrap
-{
+.comments_wrap {
   padding: 10px 15px;
 }
-.create_comment{
+.create_comment {
   display: flex;
   align-items: center;
   gap: 5px;
 }
-.create_comment img{
+.create_comment img {
   width: 35px;
   height: 35px;
   border-radius: 50%;
   object-fit: cover;
 }
-.comment_input_wrap{
+.comment_input_wrap {
   position: relative;
   width: 100%;
   height: 100%;
@@ -374,7 +373,7 @@
   border-radius: 50px;
   padding-right: 10px;
 }
-.comment_input_wrap input{
+.comment_input_wrap input {
   outline: none;
   border: none;
   flex: 1;
@@ -382,9 +381,8 @@
   padding: 0 10px;
   color: var(--color-primary);
   background: transparent;
-
 }
-.comment_circle_icon{
+.comment_circle_icon {
   height: 30px;
   width: 30px;
   display: grid;
@@ -392,28 +390,68 @@
   cursor: pointer;
   border-radius: 50%;
 }
-.comment_error{
+.comment_error {
   padding: 0 !important;
   opacity: 1 !important;
 }
-.comment_img_preview{
+.comment_img_preview {
   position: relative;
   width: 160px;
   margin-top: 5px;
   margin-left: 40px;
 }
-.comment_img_preview img{
+.comment_img_preview img {
   width: 150px;
   height: 110px;
   object-fit: cover;
   border-radius: 5px;
 }
-.comment_img_preview .small_white_circle{
+.comment_img_preview .small_white_circle {
   top: -6px;
   right: -4px;
   transform: scale(0.8);
 }
 /* create comments */
+
+/* post menu */
+.post_menu {
+  background: var(--bg-primary);
+  width: 300px;
+  box-shadow: 1px 0 2px var(--shadow-1);
+  border-radius: 10px;
+  position: absolute;
+  top: 3.1rem;
+  right: 10px;
+  z-index: 99;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 19px;
+  padding: 10px;
+}
+.post_menu li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.post_menu_text {
+  display: flex;
+  flex-direction: column;
+}
+.menu_post_col {
+  font-size: 12px;
+  color: #65676b;
+}
+.line {
+  width: 100%;
+  height: 1px;
+  background: #ced0d4;
+  margin: 5px 0;
+}
+/* post menu */
 @media (max-width: 415px) {
   .post .grid_2 img,
   .post .grid_3 img,
