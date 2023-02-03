@@ -9,7 +9,7 @@ const generateToken = require("../helpers/token");
 const {
   sendVerificationEmail,
   sendResetPasswordcode,
-} = require("../helpers/MAILER.JS");
+} = require("../helpers/mailer.js");
 const jwt = require("jsonwebtoken");
 const Code = require("../models/Code");
 const generateCode = require("../helpers/generateCode");
