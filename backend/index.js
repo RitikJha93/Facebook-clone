@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const fileUpload = require('express-fileupload')
 const connectToMongo = require('./db/db')
 const {readdirSync} = require('fs')
+const PORT = 5000
 dotenv.config()
 const app = express()
 app.use(express.json())
@@ -19,6 +20,6 @@ connectToMongo()
 readdirSync('./routes').map((r)=>app.use('/',require("./routes/" + r)))
 console.log((new Date() * Math.random()).toString().substring(0,1))
 
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT || PORT,()=>{
     console.log('server connected succesfully');
 })
