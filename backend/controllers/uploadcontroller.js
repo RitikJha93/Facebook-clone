@@ -1,9 +1,12 @@
 const fs = require('fs');
 const cloudinary = require('cloudinary');
+
+
 cloudinary.config({
-    cloud_name : process.env.CLOUD_NAME,
-    api_key : process.env.CLOUD_API_KEY,
-    api_secret : process.env.CLOUD_SECRET_KEY
+    cloud_name: 'ritikjha', 
+    api_key: '993393352375233', 
+    api_secret: 'oC9ZXjdWVUH8KYnQC50RXZC5ABo',
+    secure: true
 })
 const uploadImages = async (req, res) => {
   try {
@@ -19,6 +22,7 @@ const uploadImages = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log(error);
+    console.log(process.env.CLOUD_API_KEY)
   }
 };
 const listImages = async (req, res) =>{
@@ -46,6 +50,7 @@ const uploadToCloudinary = async (file, path) => {
             (err,res)=>{
                 if(err){
                     removeTmp(file.tempFilePath);
+                    return
                     return res.status(400).json({ message: 'Upload Image failed' });
                 }
                 resolve({
