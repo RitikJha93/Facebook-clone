@@ -12,7 +12,7 @@ dotenv.config()
 const app = express()
 app.use(express.json())
 const options = {
-    origin:"http://localhost:3000",
+    origin:["http://localhost:3000","https://facebook-clone93.vercel.app"],
     useSuccessStatus : 200
 }
 app.use(cors(options))
